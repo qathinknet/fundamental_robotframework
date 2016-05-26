@@ -1,0 +1,44 @@
+# OS generated files
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.bak
+.map
+
+# Robot Framework
+**/**/report_*/
+**/**/log.html
+**/**/report.html
+**/**/output.xml
+**/**/data_personal.txt
+**/**/selenium-screenshot*
+
+# Packages
+######################
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+
+# Node | Bower | SCSS
+######################
+/.sass-cache
+/public/build
+/bower_components
+npm-debug.log
+
+
+# Composer
+######################
+composer.lock
+composer.phar
