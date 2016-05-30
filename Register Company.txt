@@ -5,34 +5,167 @@ Suite Setup        Open Page
 
 *** Keyword ***
 Open Page
-   Open Browser                     http://test1-v2.jobthai.com/home/searchjob.php
-   Click Element                    id=bt_login_employer
+   Open Browser                      http://test1-v2.jobthai.com/home/searchjob.php
+   Click Element                     id=bt_login_employer
 
 *** Variables ***
-${error_message_1}                  กรอกชื่อผู้ใช้ 6-15 หลัก เป็นตัวอักษรภาษาอังกฤษ ตัวเลข หรือเครื่องหมาย_เท่านั้น
-${error_message_2}                  กรอกรหัสผ่าน 6-15 หลัก เป็นตัวอักษรภาษาอังกฤษ ตัวเลข หรือเครื่องหมาย_เท่านั้น
-${error_message_3}                  กรอก Email ให้ถูกต้อง เช่น "jobthai@example.com" คุณสามารถกรอกได้มากกว่า 1 อีเมล โดยใช้เครื่องหมาย (,) คั่นระหว่างอีเมล
+# ${Helper_message_1}                  กรอกชื่อผู้ใช้ 6-15 หลัก เป็นตัวอักษรภาษาอังกฤษ ตัวเลข หรือเครื่องหมาย_เท่านั้น
+# ${Helper_message_2}                  กรอกรหัสผ่าน 6-15 หลัก เป็นตัวอักษรภาษาอังกฤษ ตัวเลข หรือเครื่องหมาย_เท่านั้น
+# ${Helper_message_3}                  กรอก Email ให้ถูกต้อง เช่น "jobthai@example.com" คุณสามารถกรอกได้มากกว่า 1 อีเมล โดยใช้เครื่องหมาย (,) คั่นระหว่างอีเมล
 
 *** Test Cases ***
 
-Register Company : Helper
+# Register Company : Helper
 
-   Click Element                    id=register_username
-   Element Should Contain           id=register_username_helper                ${error_message_1}
-   Click Element                    id=register_password
-   Element Should Contain           id=register_password_helper                ${error_message_2}
-   Click Element                    id=register_confirm_password
-   Element Should Contain           id=register_confirm_password_helper        กรุณากรอกยืนยันรหัสผ่าน
-   Click Element                    id=register_company_name
-   Element Should Contain           id=register_company_name_helper            กรุณากรอกชื่อบริษัท
-   Click Element                    id=register_business_type
-   Element Should Contain           id=register_business_type_helper           กรุณาเลือกลักษณะธุรกิจ
-   Click Element                    id=register_contact_name
-   Element Should Contain Text          id=register_contact_name_helper           กรุณากรอกชื่อผู้ติดต่อ
-   Click Element                    id=register_contact_tel
-   Element Should Contain           id=register_contact_tel_helper             กรุณากรอกเบอร์โทรศัพท์
-   Click Element                    id=register_contact_email
-   Element Should Contain           id=register_contact_email_helper           ${error_message_3}
+#    Click Element                    id=register_username
+#    Element Should Contain           id=register_username_helper                   ${Helper_message_1}
+
+#    Click Element                    id=register_password
+#    Element Should Contain           id=register_password_helper                   ${Helper_message_2}
+
+#    Click Element                    id=register_confirm_password
+#    Element Should Contain           id=register_confirm_password_helper           กรุณากรอกยืนยันรหัสผ่าน
+
+#    Click Element                    id=register_company_name
+#    Element Should Contain           id=register_company_name_helper               กรุณากรอกชื่อบริษัท
+
+#    Click Element                    id=select2-register_business_type-container
+#    Element Should Contain           id=register_business_type_helper              กรุณาเลือกลักษณะธุรกิจ
+#    Click Element                    id=select2-register_business_type-container
+
+#    Click Element                    id=register_contact_name
+#    Element Should Contain           id=register_contact_name_helper               กรุณากรอกชื่อผู้ติดต่อ
+
+#    Click Element                    id=register_contact_tel
+#    Element Should Contain           id=register_contact_tel_helper                กรุณากรอกเบอร์โทรศัพท์
+
+#    Click Element                    id=register_contact_email
+#    Element Should Contain           id=register_contact_email_helper              ${Helper_message_3}
+
+
+# Register Company : Success
+
+#    Input Text                       id=register_username                        test_robot_1
+#    Input Text                       id=register_password                        10042535
+#    Input Text                       id=register_confirm_password                10042535
+#    Input Text                       id=register_company_name                    บริษัท ทดสอบ (Test) จำกัด
+#    Select From List By Label        id=register_business_type                   ธุรกิจ ค้าปลีก
+#    Input Text                       id=register_contact_name                    นายทดสอบ ตรวจสอบ
+#    Input Text                       id=register_contact_tel                     081-1001-955
+#    Input Text                       id=register_contact_email                   Email@tester.com
+#    sleep                            5s
+#    Click Button                     id=register_submit
+# #   Page Should Contain             การลงทะเบียนเรียบร้อยแล้ว กรุณากดปุ่มเข้าสู่ระบบด้านล่าง เพื่อทำการลงประกาศตำแหน่งงาน
+
+
+# Register Company : Reqire all field
+
+#    Input Text                       id=register_username                         ${empty}
+#    Element Should Contain           id=register_username_error                   กรุณากรอกชื่อผู้ใช้
+
+#    Input Text                       id=register_password                         ${empty}
+#    Element Should Contain           id=register_password_error                   กรุณากรอกรหัสผ่าน
+
+#    Input Text                       id=register_confirm_password                 ${empty}
+#    Element Should Contain           id=register_username_error                   กรุณากรอกยืนยันรหัสผ่าน
+
+#    Input Text                       id=register_company_name                     ${empty}
+#    Element Should Contain           id=register_company_name_error               กรุณากรอกชื่อบริษัท
+
+#    Click Element                    id=register_business_type
+#    Element Should Contain           id=register_business_type_error              กรุณาเลือกลักษณะธุรกิจ
+
+
+#    Input Text                       id=register_contact_name                     ${empty}
+#    Element Should Contain           id=register_contact_name_error               กรุณากรอกชื่อผู้ติดต่อ
+
+#    Input Text                       id=register_contact_tel                      ${empty}
+#    Element Should Contain           id=register_contact_tel_error                กรุณากรอกเบอร์โทรศัพท์
+
+#    Input Text                       id=register_contact_email                    ${empty}
+#    Element Should Contain           id=register_contact_email_error              กรุณากรอกอีเมล
+
+#    sleep                            5s
+#    Click Button                     id=register_submit
+
+
+# Register Company : Reqire all field
+
+#    Input Text                         id=register_username                         ${empty}
+#    Click Element                      id=login_username
+#    Element Should Contain             id=register_username_error                   กรุณากรอกชื่อผู้ใช้
+
+#    Input Text                         id=register_password                         ${empty}
+#    Click Element                      id=login_username
+#    Element Should Contain             id=register_password_error                   กรุณากรอกรหัสผ่าน
+
+#    Input Text                         id=register_confirm_password                 ${empty}
+#    Click Element                      id=login_username
+#    Element Should Contain             id=register_confirm_password_error           กรุณากรอกยืนยันรหัสผ่าน
+
+
+#    Input Text                         id=register_company_name                     ${empty}
+#    Click Element                      id=login_username
+#    Element Should Contain             id=register_company_name_error               กรุณากรอกชื่อบริษัท
+
+#    Click Element                      id=select2-register_business_type-container
+#    Element Should Contain             id=register_business_type_helper             กรุณาเลือกลักษณะธุรกิจ
+
+#    Input Text                         id=register_contact_name                     ${empty}
+#    Click Element                      id=login_username
+#    Element Should Contain             id=register_contact_name_error               กรุณากรอกชื่อผู้ติดต่อ
+
+#    Input Text                         id=register_contact_tel                      ${empty}
+#    Click Element                      id=login_username
+#    Element Should Contain             id=register_contact_tel_error                กรุณากรอกเบอร์โทรศัพท์
+
+#    Input Text                         id=register_contact_email                    ${empty}
+#    Click Element                      id=login_username
+#    Element Should Contain             id=register_contact_email_error              กรุณากรอกอีเมล
+
+
+#    sleep                              5s
+#    Click Button                       id=register_submit
+
+Register Company : Username invalid
+
+   Input Text                         id=register_username                         Company%$#@
+   Click Element                      id=login_username
+   Element Should Contain             id=register_username_error                   กรุณากรอกชื่อผู้ใช้ เป็นตัวอักษรภาษาอังกฤษ ตัวเลข หรือเครื่องหมาย_เท่านั้น
+
+   Input Text                         id=register_password                         pass_company
+   Click Element                      id=login_username
+
+   Input Text                         id=register_confirm_password                 pass_company
+   Click Element                      id=login_username
+
+   Input Text                         id=register_company_name                     Thinknet Test Company
+   Click Element                      id=login_username
+
+   Select From List By Label          id=register_business_type                   ธุรกิจ ค้าปลีก
+
+   Input Text                         id=register_contact_name                     HR
+   # Click Element                      id=login_username
+   # Element Should Contain             id=register_contact_name_error               กรุณากรอกชื่อผู้ติดต่อ
+
+   Input Text                         id=register_contact_tel                      02-9000000
+   # Click Element                      id=login_username
+   # Element Should Contain             id=register_contact_tel_error                กรุณากรอกเบอร์โทรศัพท์
+
+   Input Text                         id=register_contact_email
+   # Click Element                      id=login_username
+   # Element Should Contain             id=register_contact_email_error              กรุณากรอกอีเมล
+
+
+   # sleep                              5s
+   # Click Button                       id=register_submit
+
+
+
+
+
+
+
 
 
 
