@@ -1,0 +1,164 @@
+*** Settings ***
+Library            Selenium2Library
+Resource           error_msg/msg_${l}.txt
+Resource           Keyword.txt
+Resource           Template.txt
+Suite Setup        Open Page
+Test Template      Test Step Register Company
+Suite teardown     Reload Page
+
+
+*** Variables ***
+${l}          en
+
+*** Test Cases ***
+Register Company : Username invalid
+  ...  Company%$#@                              ${inner_username_invalid}
+  ...  pass_company                             ${empty}
+  ...  pass_company                             ${empty}
+  ...  Thinknet Test Company                    ${empty}
+  ...  ${business_type}                         ${empty}
+  ...  HR                                       ${empty}
+  ...  02-9000000                               ${empty}
+  ...  Contact_test_company@thinknet.co.th      ${empty}
+
+Register Company : Username less than 6 character
+  ...  user                                     ${inner_less_username}
+  ...  pass_company                             ${empty}
+  ...  pass_company                             ${empty}
+  ...  Thinknet Test Company                    ${empty}
+  ...  ${business_type}                         ${empty}
+  ...  HR                                       ${empty}
+  ...  02-9000000                               ${empty}
+  ...  Contact_test_company@thinknet.co.th      ${empty}
+
+Register Company : Username more than 15 character
+  ...  username1234567890                       ${inner_more_username}  #BUG
+  ...  pass_company                             ${empty}
+  ...  pass_company                             ${empty}
+  ...  Thinknet Test Company                    ${empty}
+  ...  ${business_type}                         ${empty}
+  ...  HR                                       ${empty}
+  ...  02-9000000                               ${empty}
+  ...  Contact_test_company@thinknet.co.th      ${empty}
+
+Register Company : Username already register
+  ...  test_robot_1                             ${inner_exits_username}
+  ...  pass_company                             ${empty}
+  ...  pass_company                             ${empty}
+  ...  Thinknet Test Company                    ${empty}
+  ...  ${business_type}                         ${empty}
+  ...  HR                                       ${empty}
+  ...  02-9000000                               ${empty}
+  ...  Contact_test_company@thinknet.co.th      ${empty}
+
+Register Company : Password is equal Username
+  ...  user_company_1                           ${empty}
+  ...  user_company_1                           ${inner_pass_equal_username}
+  ...  user_company_1                           ${empty}
+  ...  Thinknet Test Company                    ${empty}
+  ...  ${business_type}                         ${empty}
+  ...  HR                                       ${empty}
+  ...  02-9000000                               ${empty}
+  ...  Contact_test_company@thinknet.co.th      ${empty}
+
+Register Company : Password & Confirm Password invalid
+  ...  test_company_1                           ${empty}
+  ...  !@#$%^&                                  ${inner_invalid_password}
+  ...  !@#$%^&                                  ${empty}
+  ...  Thinknet Test Company                    ${empty}
+  ...  ${business_type}                         ${empty}
+  ...  HR                                       ${empty}
+  ...  02-9000000                               ${empty}
+  ...  Contact_test_company@thinknet.co.th      ${empty}
+
+Register Company : Password & Confirm Password less than 6 character
+  ...  test_company_1                           ${empty}
+  ...  pass                                     ${inner_less_password}
+  ...  pass                                     ${empty}
+  ...  Thinknet Test Company                    ${empty}
+  ...  ${business_type}                         ${empty}
+  ...  HR                                       ${empty}
+  ...  02-9000000                               ${empty}
+  ...  Contact_test_company@thinknet.co.th      ${empty}
+
+Register Company : Password & Confirm Password more than 15 character
+  ...  test_company_1                           ${empty}
+  ...  pass123456789876548879                   ${inner_more_password}
+  ...  pass123456789876548879                   ${empty}
+  ...  Thinknet Test Company                    ${empty}
+  ...  ${business_type}                         ${empty}
+  ...  HR                                       ${empty}
+  ...  02-9000000                               ${empty}
+  ...  Contact_test_company@thinknet.co.th      ${empty}
+
+Register Company : Password & Confirm Password sequence number
+  ...  test_company_1                           ${empty}
+  ...  123456789                                ${inner_sequence_password}
+  ...  123456789                                ${empty}
+  ...  Thinknet Test Company                    ${empty}
+  ...  ${business_type}                         ${empty}
+  ...  HR                                       ${empty}
+  ...  02-9000000                               ${empty}
+  ...  Contact_test_company@thinknet.co.th      ${empty}
+
+Register Company : Password & Confirm Password unique number
+  ...  test_company_1                           ${empty}
+  ...  111111111                                ${inner_unique_password}
+  ...  111111111                                ${empty}
+  ...  Thinknet Test Company                    ${empty}
+  ...  ${business_type}                         ${empty}
+  ...  HR                                       ${empty}
+  ...  02-9000000                               ${empty}
+  ...  Contact_test_company@thinknet.co.th      ${empty}
+
+Register Company : Password & Confirm Password don't match
+  ...  test_company_1                           ${empty}
+  ...  company_pass                             ${empty}
+  ...  Thinknet_pass                            ${inner_not_match_password}
+  ...  Thinknet Test Company                    ${empty}
+  ...  ${business_type}                         ${empty}
+  ...  HR                                       ${empty}
+  ...  02-9000000                               ${empty}
+  ...  Contact_test_company@thinknet.co.th      ${empty}
+
+Register Company : Telephone number less than 9 character
+  ...  test_company_1                           ${empty}
+  ...  pass_company                             ${empty}
+  ...  pass_company                             ${empty}
+  ...  Thinknet Test Company                    ${empty}
+  ...  ${business_type}                         ${empty}
+  ...  HR                                       ${empty}
+  ...  1150 ต่อ 45                               ${inner_less_tel}
+  ...  Contact_test_company@thinknet.co.th      ${empty}
+
+Register Company : Email contact invalid
+  ...  test_company_1                           ${empty}
+  ...  pass_company                             ${empty}
+  ...  pass_company                             ${empty}
+  ...  Thinknet Test Company                    ${empty}
+  ...  ${business_type}                         ${empty}
+  ...  HR                                       ${empty}
+  ...  029000000                                ${empty}
+  ...  ontact_test_company@example.com          ${inner_@example_email}
+
+Register Company : Email@jobthai.com
+  ...  test_company_1                           ${empty}
+  ...  pass_company                             ${empty}
+  ...  pass_company                             ${empty}
+  ...  Thinknet Test Company                    ${empty}
+  ...  ${business_type}                         ${empty}
+  ...  HR                                       ${empty}
+  ...  029000000                                ${empty}
+  ...  contact_test_company@jobthai.com         ${inner_@jobthai_email}
+
+Register Company : Require recaptcha
+  ...  test_company_1                           ${empty}
+  ...  pass_company                             ${empty}
+  ...  pass_company                             ${empty}
+  ...  Thinknet Test Company                    ${empty}
+  ...  ${business_type}                         ${empty}
+  ...  HR                                       ${empty}
+  ...  029000000                                ${empty}
+  ...  contact_test_company@thinknet.co.th      ${empty}
+
