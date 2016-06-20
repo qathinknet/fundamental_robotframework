@@ -1,0 +1,5 @@
+*** Keyword ***
+Open Page
+   Open Browser                     http://test1-v2.jobthai.com/home/searchjob.php
+   Click Element                    id=${l}URL
+   Click Element                    id=bt_login_employer
