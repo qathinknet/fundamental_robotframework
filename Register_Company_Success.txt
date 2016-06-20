@@ -1,7 +1,7 @@
 *** Settings ***
 Library            Selenium2Library
-Resource           error_msg/msg_${l}.txt
-Resource           page_${l}.txt
+Resource           msg_${l}.txt
+Resource           Keyword.txt
 #Resource           Template.txt
 Suite Setup        Open Page
 #Test Template      Test Step Register Company
