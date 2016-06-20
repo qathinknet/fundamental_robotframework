@@ -1,0 +1,33 @@
+*** Variables ***
+
+${helper_username}                         Enter a username at least 6-15 characters long with${\n}alphanumeric characters or underscore (_) only.
+${helper_password}                         Enter a password at least 6-15 characters long with alphanumeric characters or underscore (_) only.
+${helper_email}                            Enter an email address (e.g. jobthai@example.com). You can enter a multiple email address, please enter a comma (,) between email address.
+${inner_username_require}                   Please enter a username.
+${inner_password_require}                   Please enter a password.
+${inner_comfirm_password_require}           Please enter a password.
+${inner_company_name_require}               Please enter a company name.
+${inner_business_type_require}              Please select a business.
+${inner_contact_name_require}               Please enter a name of contact person.
+${inner_tel_require}                        Please enter a telephone number.
+${inner_email_require}                      Please enter an email address.
+${inner_username_invalid}                   Please enter a username with alphanumeric characters or underscore (_) only.
+${inner_less_username}                      Please enter a username at least 6 characters long.
+${inner_more_username}                      Please enter a username. (No more than 15 characters)
+${inner_exits_username}                     This username is already registered, please choose another username.
+${inner_username_equal_pass}                For security reason, a username should not be the same as your password.
+${inner_pass_equal_username}                For security reason, a password should not be the same as your username.
+${inner_invalid_password}                   Please enter a password with alphanumeric characters or underscore (_) only.
+${inner_less_password}                      Please enter a password at least 6 characters long.
+${inner_more_password}                      Please enter a password. (No more than 15 characters)
+${inner_sequence_password}                  For security reason, a password should not be a sequential numbers.
+${inner_unique_password}                    For security reason, a password should not be a repeating numbers.
+${inner_not_match_password}                 These passwords do not match.
+${inner_less_tel}                           Please enter a telephone number at least 9 characters long.
+${inner_@example_email}                     Your email address is incorrect. "@example.com" is only a sample.
+${inner_@jobthai_email}                     Your email address is incorrect. "@jobthai.com" is only a sample.
+${inner_recaptcha}                          Please check the checkbox in front of the text I'm not a robot.
+${business_type}                            Computer/IT
+${Register_Success}                         Your registration is complete
+${Plese_Click}                              Please click Log In to create job postings.
+${Please_Select}                            Please select a package.
