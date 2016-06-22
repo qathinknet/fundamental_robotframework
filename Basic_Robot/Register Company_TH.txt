@@ -1,0 +1,831 @@
+*** Settings ***
+Library            Selenium2Library
+Suite Setup        Open Page
+Suite teardown     Reload Page
+
+*** Keyword ***
+Open Page
+   Open Browser                            http://test1-v2.jobthai.com/home/searchjob.php
+   Click Element                           id=bt_login_employer
+
+
+*** Variables ***
+${helper_username}                           กรอกชื่อผู้ใช้ 6-15 หลัก เป็นตัวอักษรภาษาอังกฤษ ตัวเลข หรือเครื่องหมาย_เท่านั้น
+${helper_password}                           กรอกรหัสผ่าน 6-15 หลัก เป็นตัวอักษรภาษาอังกฤษ ตัวเลข หรือเครื่องหมาย_เท่านั้น
+${helper_email}                              กรอกอีเมล เช่น "jobthai@example.com" คุณสามารถกรอกได้มากกว่า 1 อีเมล โดยใช้เครื่องหมาย (,) คั่นระหว่างอีเมล
+
+${inner_username_require}                    กรุณากรอกชื่อผู้ใช้
+${inner_password_require}                    กรุณากรอกรหัสผ่าน
+${inner_comfirm_password_require}            กรุณากรอกยืนยันรหัสผ่าน
+${inner_company_name_require}                กรุณากรอกชื่อบริษัท
+${inner_business_type_require}               กรุณาเลือกลักษณะธุรกิจ
+${inner_contact_name_require}                กรุณากรอกชื่อผู้ติดต่อ
+${inner_tel_require}                         กรุณากรอกเบอร์โทรศัพท์
+${inner_email_require}                       กรุณากรอกอีเมล
+
+${inner_username_invalid}                  กรุณากรอกชื่อผู้ใช้ เป็นตัวอักษรภาษาอังกฤษ ตัวเลข หรือเครื่องหมาย_เท่านั้น
+${inner_less_username}                     กรุณากรอกชื่อผู้ใช้ อย่างน้อย 6 หลัก
+${inner_more_username}                     กรุณากรอกชื่อผู้ใช้ ไม่เกิน 15 หลัก
+${inner_exits_username}                    ชื่อผู้ใช้นี้มีผู้ใช้งานแล้ว กรุณาเลือกใช้ชื่อผู้ใช้อื่น
+${inner_username_equal_pass}               เพื่อความปลอดภัยของข้อมูล ไม่ควรใช้ชื่อผู้ใช้ตรงกับรหัสผ่าน
+${inner_pass_equal_username}               เพื่อความปลอดภัยของข้อมูล ไม่ควรใช้รหัสผ่านตรงกับชื่อผู้ใช้
+${inner_invalid_password}                  กรุณากรอกรหัสผ่าน เป็นตัวอักษรภาษาอังกฤษ ตัวเลข หรือเครื่องหมาย_เท่านั้น
+${inner_less_password}                     กรุณากรอกรหัสผ่าน อย่างน้อย 6 หลัก
+${inner_more_password}                     กรุณากรอกรหัสผ่าน ไม่เกิน 15 หลัก
+${inner_sequence_password}                 เพื่อความปลอดภัยของข้อมูล ไม่ควรใช้รหัสผ่านที่เป็นเลขเรียงกัน
+${inner_unique_password}                   เพื่อความปลอดภัยของข้อมูล ไม่ควรใช้รหัสผ่านที่เป็นเลขซ้ำกัน
+${inner_not_match_password}                ข้อมูลรหัสผ่านไม่ตรงกัน
+${inner_less_tel}                          กรุณากรอกเบอร์โทรศัพท์อย่างน้อย 9 หลัก
+${inner_@example_email}                    ข้อมูลอีเมลไม่ถูกต้อง อีเมล "@example.com" เป็นอีเมลตัวอย่าง
+${inner_@jobthai_email}                    ข้อมูลอีเมลไม่ถูกต้อง อีเมล "@jobthai.com" เป็นอีเมลตัวอย่าง
+${inner_recaptcha}                         กรุณาทำเครื่องหมายถูกหน้าข้อความฉันไม่ใช่โปรแกรมอัตโนมัติ
+
+
+
+*** Test Cases ***
+
+Register Company : Helper
+
+    Click Element                     id=register_username
+    Click Element                     id=login_username
+    Element Text Should Be            id=register_username_helper                   ${helper_username}
+
+    Click Element                     id=register_password
+    Click Element                     id=login_username
+#    Element Text Should Be            id=register_password_helper                   ${helper_password}          #BUG
+
+    Click Element                     id=register_confirm_password
+    Click Element                     id=login_username
+
+    Click Element                     id=register_company_name
+    Click Element                     id=login_username
+
+    Click Element                     id=select2-register_business_type-container
+    Click Element                     id=login_username
+
+    Click Element                     id=register_contact_name
+    Click Element                     id=login_username
+
+    Click Element                     id=register_contact_tel
+    Click Element                     id=login_username
+
+    Click Element                     id=register_contact_email
+    Click Element                     id=login_username
+#    Element Text Should Be            id=register_contact_email_helper              ${helper_email}           #BUG
+
+    Click Element                      id=register_submit
+
+
+Register Company : Reqire all field
+
+   Input Text                       id=register_username                         ${empty}
+   Click Element                    id=login_username
+   Element Text Should Be           id=register_username_error                   ${inner_username_require}
+
+   Input Text                       id=register_password                         ${empty}
+   Click Element                    id=login_username
+   Element Text Should Be           id=register_password_error                   ${inner_password_require}
+
+
+   Input Text                       id=register_confirm_password                 ${empty}
+   Click Element                    id=login_username
+   Element Text Should Be           id=register_confirm_password_error           ${inner_comfirm_password_require}
+
+
+   Input Text                       id=register_company_name                     ${empty}
+   Click Element                    id=login_username
+   Element Text Should Be           id=register_company_name_error               ${inner_company_name_require}
+
+   Click Element                    id=register_business_type
+   Click Element                    id=login_username
+#   Element Text Should Be           id=register_business_type_error              ${inner_business_type_require}      #BUG
+
+
+   Input Text                       id=register_contact_name                     ${empty}
+   Click Element                    id=login_username
+   Element Text Should Be           id=register_contact_name_error               ${inner_contact_name_require}
+
+
+   Input Text                       id=register_contact_tel                      ${empty}
+   Click Element                    id=login_username
+   Element Text Should Be           id=register_contact_tel_error                ${inner_tel_require}
+
+   Input Text                       id=register_contact_email                    ${empty}
+   Click Element                    id=login_username
+   Element Text Should Be           id=register_contact_email_error              ${inner_email_require}
+
+   Click Button                     id=register_submit
+
+Register Company : Username invalid
+
+    Input Text                         id=register_username                         Company%$#@
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_username_error                   ${inner_username_invalid}
+
+    Input Text                         id=register_password                         pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                   ${empty}
+
+    Input Text                         id=register_confirm_password                  pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password_error            ${empty}
+
+    Input Text                         id=register_company_name                      Thinknet Test Company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error                ${empty}
+
+    Select From List By Label          id=register_business_type                     ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error               ${empty}
+
+    Input Text                         id=register_contact_name                      HR
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error                ${empty}
+
+    Input Text                         id=register_contact_tel                       02-9000000
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error                 ${empty}
+
+    Input Text                         id=register_contact_email                     contact_test_company@thinknet.co.th
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_email_error               ${empty}
+
+    Click Button                       id=register_submit
+
+
+Register Company : Username less than 6 character
+
+    Input Text                         id=register_username                         user
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_username_error                   ${inner_less_username}
+
+    Input Text                         id=register_password                         pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                   ${empty}
+
+    Input Text                         id=register_confirm_password                 pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password_error           ${empty}
+
+    Input Text                         id=register_company_name                     Thinknet Test Company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error               ${empty}
+
+    Select From List By Label          id=register_business_type                    ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error              ${empty}
+
+    Input Text                         id=register_contact_name                     HR
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error               ${empty}
+
+    Input Text                         id=register_contact_tel                      02-9000000
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error                ${empty}
+
+    Input Text                         id=register_contact_email                    contact_test_company@thinknet.co.th
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_email_error              ${empty}
+
+    Click Button                       id=register_submit
+
+Register Company : Username more than 15 character
+
+    Input Text                         id=register_username                         username1234567890
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_username_error                   ${inner_more_username}
+
+    Input Text                         id=register_password                         pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                   ${empty}
+
+    Input Text                         id=register_confirm_password                 pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password_error           ${empty}
+
+    Input Text                         id=register_company_name                     Thinknet Test Company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error               ${empty}
+
+    Select From List By Label          id=register_business_type                    ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error              ${empty}
+
+    Input Text                         id=register_contact_name                     HR
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error               ${empty}
+
+    Input Text                         id=register_contact_tel                      02-9000000
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error                ${empty}
+
+    Input Text                         id=register_contact_email                    contact_test_company@thinknet.co.th
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_email_error              ${empty}
+
+    Click Button                       id=register_submit
+
+Register Company : Username already register
+
+    Input Text                         id=register_username                        test_robot_1
+    Click Element                      id=login_username
+    Sleep      3s
+    Element Text Should Be             id=register_username_error                  ${inner_exits_username}
+
+    Input Text                         id=register_password                        10042535
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                  ${empty}
+
+    Input Text                         id=register_confirm_password                10042535
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password_error          ${empty}
+
+    Input Text                         id=register_company_name                    บริษัท ทดสอบ (Test) จำกัด
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error              ${empty}
+
+    Select From List By Label          id=register_business_type                   ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error             ${empty}
+
+    Input Text                         id=register_contact_name                    นายทดสอบ ตรวจสอบ
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error              ${empty}
+
+    Input Text                         id=register_contact_tel                     081-1001-955
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error               ${empty}
+
+    Input Text                         id=register_contact_email                   Email@tester.com
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_email_error             ${empty}
+
+    Click Button                       id=register_submit
+
+Register Company : Username is equal Password
+
+    Input Text                         id=register_password                         pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                   ${empty}
+
+
+    Input Text                         id=register_username                         pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_username_error                   ${inner_username_equal_pass}
+
+
+    Input Text                         id=register_confirm_password                 pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password_error           ${empty}
+
+    Input Text                         id=register_company_name                     Thinknet Test Company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error               ${empty}
+
+    Select From List By Label          id=register_business_type                    ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error              ${empty}
+
+    Input Text                         id=register_contact_name                     HR
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error               ${empty}
+
+    Input Text                         id=register_contact_tel                      02-9000000
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error                ${empty}
+
+
+    Input Text                         id=register_contact_email                    contact_test_company@thinknet.co.th
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_email_error              ${empty}
+
+
+    Click Button                       id=register_submit
+
+Register Company : Password is equal Username
+
+    Input Text                         id=register_username                         user_company_1
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_username_error                   ${empty}
+
+
+    Input Text                         id=register_password                         user_company_1
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                   ${inner_pass_equal_username}
+
+
+    Input Text                         id=register_confirm_password                 user_company_1
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password_error           ${empty}
+
+
+    Input Text                         id=register_company_name                     Thinknet Test Company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error               ${empty}
+
+
+    Select From List By Label          id=register_business_type                    ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error              ${empty}
+
+
+    Input Text                         id=register_contact_name                     HR
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error               ${empty}
+
+
+    Input Text                         id=register_contact_tel                      02-9000000
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error                ${empty}
+
+
+    Input Text                         id=register_contact_email                    contact_test_company@thinknet.co.th
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_email_error              ${empty}
+
+    Click Button                       id=register_submit
+
+Register Company : Password & Confirm Password invalid
+
+    Input Text                         id=register_username                         user_company_1
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_username_error                   ${empty}
+
+
+    Input Text                         id=register_password                         !@#$%^&
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                   ${inner_invalid_password}
+
+
+    Input Text                         id=register_confirm_password                 !@#$%^&
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password_error           ${empty}
+
+
+    Input Text                         id=register_company_name                     Thinknet Test Company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error               ${empty}
+
+
+    Select From List By Label          id=register_business_type                    ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error              ${empty}
+
+
+    Input Text                         id=register_contact_name                     HR
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error               ${empty}
+
+
+    Input Text                         id=register_contact_tel                      02-9000000
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error                ${empty}
+
+
+    Input Text                         id=register_contact_email                    contact_test_company@thinknet.co.th
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_email_error              ${empty}
+
+    Click Button                       id=register_submit
+
+Register Company : Password & Confirm Password less than 6 character
+
+    Input Text                         id=register_username                                     user_company_1
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_username_error                               ${empty}
+
+
+    Input Text                         id=register_password                                     pass
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                               ${inner_less_password}
+
+
+    Input Text                         id=register_confirm_password                             pass
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password                             ${empty}
+
+
+    Input Text                         id=register_company_name                                 Thinknet Test Company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error                           ${empty}
+
+
+    Select From List By Label          id=register_business_type                                ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error                          ${empty}
+
+
+    Input Text                         id=register_contact_name                                 HR
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error                           ${empty}
+
+
+    Input Text                         id=register_contact_tel                                 02-9000000
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error                           ${empty}
+
+
+    Input Text                         id=register_contact_email                               contact_test_company@thinknet.co.th
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_email_error                         ${empty}
+
+    Click Button                       id=register_submit
+
+Register Company : Password & Confirm Password more than 15 character
+
+    Input Text                         id=register_username                                     user_company_1
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_username_error                               ${empty}
+
+
+    Input Text                         id=register_password                                     pass123456789876548879
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                               ${inner_more_password}
+
+
+    Input Text                         id=register_confirm_password                             pass123456789876548879
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password                             ${empty}
+
+
+    Input Text                         id=register_company_name                                 Thinknet Test Company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error                           ${empty}
+
+
+    Select From List By Label          id=register_business_type                                ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error                          ${empty}
+
+
+    Input Text                         id=register_contact_name                                 HR
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error                           ${empty}
+
+
+    Input Text                         id=register_contact_tel                                 02-9000000
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error                           ${empty}
+
+
+    Input Text                         id=register_contact_email                               contact_test_company@thinknet.co.th
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_email_error                         ${empty}
+
+    Click Button                       id=register_submit
+
+Register Company : Password & Confirm Password sequence number
+
+    Input Text                         id=register_username                                     user_company_1
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_username_error                               ${empty}
+
+
+    Input Text                         id=register_password                                     123456789
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                               ${inner_sequence_password}
+
+
+    Input Text                         id=register_confirm_password                             123456789
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password                             ${empty}
+
+
+    Input Text                         id=register_company_name                                 Thinknet Test Company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error                           ${empty}
+
+
+    Select From List By Label          id=register_business_type                                ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error                          ${empty}
+
+
+    Input Text                         id=register_contact_name                                 HR
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error                           ${empty}
+
+
+    Input Text                         id=register_contact_tel                                 02-9000000
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error                           ${empty}
+
+
+    Input Text                         id=register_contact_email                               contact_test_company@thinknet.co.th
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_email_error                         ${empty}
+
+    Click Button                       id=register_submit
+
+Register Company : Password & Confirm Password unique number
+
+    Input Text                         id=register_username                                     user_company_1
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_username_error                               ${empty}
+
+
+    Input Text                         id=register_password                                     111111111
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                               ${inner_unique_password}
+
+
+    Input Text                         id=register_confirm_password                             111111111
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password                             ${empty}
+
+
+    Input Text                         id=register_company_name                                 Thinknet Test Company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error                           ${empty}
+
+
+    Select From List By Label          id=register_business_type                                ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error                          ${empty}
+
+
+    Input Text                         id=register_contact_name                                 HR
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error                           ${empty}
+
+
+    Input Text                         id=register_contact_tel                                 02-9000000
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error                           ${empty}
+
+
+    Input Text                         id=register_contact_email                               contact_test_company@thinknet.co.th
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_email_error                         ${empty}
+
+    Click Button                       id=register_submit
+
+Register Company : Password & Confirm Password don't match
+
+
+    Input Text                         id=register_username                                     user_company_1
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_username_error                               ${empty}
+
+
+    Input Text                         id=register_password                                     company_pass
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                               ${empty}
+
+
+    Input Text                         id=register_confirm_password                             Thinknet Test Company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password_error                       ${inner_not_match_password}
+
+
+    Input Text                         id=register_company_name                                 Thinknet Test Company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error                           ${empty}
+
+
+    Select From List By Label          id=register_business_type                                ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error                          ${empty}
+
+
+    Input Text                         id=register_contact_name                                 HR
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error                           ${empty}
+
+
+    Input Text                         id=register_contact_tel                                  02-9000000
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error                            ${empty}
+
+
+    Input Text                         id=register_contact_email                                contact_test_company@thinknet.co.th
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_email_error                          ${empty}
+
+    Click Button                       id=register_submit
+
+Register Company : Telephone number less than 9 character
+
+    Input Text                         id=register_username                                    user_company_1
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_username_error                               ${empty}
+
+
+    Input Text                         id=register_password                                     pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                               ${empty}
+
+
+    Input Text                         id=register_confirm_password                             pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password_error                       ${empty}
+
+
+    Input Text                         id=register_company_name                                 Thinknet Test Company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error                           ${empty}
+
+
+    Select From List By Label          id=register_business_type                                ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error                          ${empty}
+
+
+    Input Text                         id=register_contact_name                                 HR
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error                           ${empty}
+
+
+    Input Text                         id=register_contact_tel                                  1150 ต่อ 45
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error                            ${inner_less_tel}
+
+
+    Input Text                         id=register_contact_email                               contact_test_company@thinknet.co.th
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_email_error                         ${empty}
+
+    Click Button                       id=register_submit
+
+Register Company : Email contact invalid
+
+    Input Text                         id=register_username                                     user_company_1
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_username_error                               ${empty}
+
+
+    Input Text                         id=register_password                                     pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                               ${empty}
+
+
+    Input Text                         id=register_confirm_password                             pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password_error                       ${empty}
+
+
+    Input Text                         id=register_company_name                                 Thinknet Test Company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error                           ${empty}
+
+
+    Select From List By Label          id=register_business_type                                ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error                          ${empty}
+
+
+    Input Text                         id=register_contact_name                                 HR
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error                           ${empty}
+
+
+    Input Text                         id=register_contact_tel                                  029000000
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error                            ${empty}
+
+
+    Input Text                         id=register_contact_email                               contact_test_company@example.com
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_email_error                         ${inner_@example_email}
+
+    Click Button                       id=register_submit
+
+Register Company : Email@jobthai.com
+
+    Input Text                         id=register_username                                     user_company_1
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_username_error                               ${empty}
+
+
+    Input Text                         id=register_password                                     pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                               ${empty}
+
+
+    Input Text                         id=register_confirm_password                             pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password_error                       ${empty}
+
+
+    Input Text                         id=register_company_name                                 Thinknet Test Company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error                           ${empty}
+
+
+    Select From List By Label          id=register_business_type                                ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error                          ${empty}
+
+
+    Input Text                         id=register_contact_name                                 HR
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error                           ${empty}
+
+
+    Input Text                         id=register_contact_tel                                  029000000
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error                            ${empty}
+
+
+    Input Text                         id=register_contact_email                               contact_test_company@jobthai.com
+    Click Element                      id=login_username
+    sleep   2s
+    Element Text Should Be             id=register_contact_email_error                         ${inner_@jobthai_email}
+
+    Click Button                       id=register_submit
+
+Register Company : Require recaptcha
+
+    Input Text                         id=register_username                                     user_company_1
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_username_error                               ${empty}
+
+
+    Input Text                         id=register_password                                     pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                               ${empty}
+
+
+    Input Text                         id=register_confirm_password                             pass_company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password_error                       ${empty}
+
+
+    Input Text                         id=register_company_name                                 Thinknet Test Company
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error                           ${empty}
+
+
+    Select From List By Label          id=register_business_type                                ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error                          ${empty}
+
+
+    Input Text                         id=register_contact_name                                 HR
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error                           ${empty}
+
+
+    Input Text                         id=register_contact_tel                                  029000000
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error                            ${empty}
+
+
+    Input Text                         id=register_contact_email                               contact_test_company@thinknet.co.th
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_email_error                         ${empty}
+
+    Click Button                       id=register_submit
+
+#    sleep                              5s
+#    Element Text Should Be             id=register_recaptcha_error                             ${inner_recaptcha}       #BUG
+
+Register Company : Success
+
+    Input Text                         id=register_username                        test_robot_10
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_username_error                  ${empty}
+
+    Input Text                         id=register_password                        10042535
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_password_error                  ${empty}
+
+    Input Text                         id=register_confirm_password                10042535
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_confirm_password_error          ${empty}
+
+    Input Text                         id=register_company_name                    บริษัท ทดสอบ (Test) จำกัด
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_company_name_error              ${empty}
+
+    Select From List By Label          id=register_business_type                   ธุรกิจ ค้าปลีก
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_business_type_error             ${empty}
+
+    Input Text                         id=register_contact_name                    นายทดสอบ ตรวจสอบ
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_name_error              ${empty}
+
+    Input Text                         id=register_contact_tel                     081-1001-955
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_tel_error               ${empty}
+
+    Input Text                         id=register_contact_email                   Email@tester.com
+    Click Element                      id=login_username
+    Element Text Should Be             id=register_contact_email_error             ${empty}
+
+    sleep                              20s
+    Click Button                       id=register_submit
+
+    Page Should Contain                การลงทะเบียนเรียบร้อยแล้ว
+#    Page Should Contain                กรุณากดปุ่ม เข้าสู่ระบบด้านล่าง เพื่อทำการลงประกาศตำแหน่งงาน       #BUG
+
+    Click Element                      id=confirm_button
+
+    Page Should Contain                กรุณาเลือก Package
+
+
+
+
+
+
