@@ -1,0 +1,15 @@
+*** Keywords ***
+Open Page
+   Open Browser                       http://test1-v2.jobthai.com/home/searchjob.php
+   Click Element                      id=${l}URL
+   Sleep   3s
+   Click Element                      id=bt_login_employer
+
+Open Welcome Email
+      Open Mailbox    host=imap.googlemail.com   user=sirilacktest@gmail.com    password=10042535
+      ${LATEST} =  Wait For Email
+   ...   sender=support@jobthail.com
+   ...   subject=Welcome to JobThai.com
+   ...   text=${input_username}
+   ...   text=${input_password}
+

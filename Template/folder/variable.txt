@@ -1,0 +1,7 @@
+*** Variables ***
+${l}                  th
+
+${input_username}     test_test_6
+${input_password}     10042535
+${input_email}        sirilacktest@gmail.com
+
