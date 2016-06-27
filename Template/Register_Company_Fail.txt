@@ -9,6 +9,16 @@ Suite Setup         Open Page
 Suite teardown      Reload Page
 
 *** Test Cases ***
+Register Company : Reqire all field
+   ...  ${empty}                              ${inner_username_require}
+   ...  ${empty}                              ${inner_password_require}
+   ...  ${empty}                              ${inner_comfirm_password_require}
+   ...  ${empty}                              ${inner_company_name_require}
+   ...  ${empty}                              ${inner_business_type_require}      #BUG
+   ...  ${empty}                              ${inner_contact_name_require}
+   ...  ${empty}                              ${inner_tel_require}
+   ...  ${empty}                              ${inner_email_require}
+
 Register Company : Username invalid
    ...  Company%$#@                           ${inner_username_invalid}
    ...  ${input_password}                     ${empty}
@@ -49,20 +59,30 @@ Register Company : Username already register
    ...  02-9000000                           ${empty}
    ...  Email@tester.com                     ${empty}
 
-# Register Company : Username is equal Password
-#    ...  pass_company                         ${empty}
-#    ...  pass_company                         ${inner_username_equal_pass}
-#    ...  pass_company                         ${empty}
-#    ...  Thinknet Test Company                ${empty}
-#    ...  ${input_business}                    ${empty}
-#    ...  HR                                   ${empty}
-#    ...  02-9000000                           ${empty}
-#    ...  contact_test_company@thinknet.co.th  ${empty}
+Register Company : Username is equal Password
+   ...  pass_company                         ${empty}
+   ...  pass_company                         ${inner_username_equal_pass}
+   ...  pass_company                         ${empty}
+   ...  Thinknet Test Company                ${empty}
+   ...  ${input_business}                    ${empty}
+   ...  HR                                   ${empty}
+   ...  02-9000000                           ${empty}
+   ...  contact_test_company@thinknet.co.th  ${empty}
 
 Register Company : Password is equal Username
-   ...  user_company_1                       ${empty}
-   ...  user_company_1                       ${inner_pass_equal_username}
-   ...  user_company_1                       ${empty}
+   ...  username_com                         ${empty}
+   ...  username_com                         ${inner_pass_equal_username}
+   ...  username_com                         ${empty}
+   ...  Thinknet Test Company                ${empty}
+   ...  ${input_business}                    ${empty}
+   ...  HR                                   ${empty}
+   ...  02-9000000                           ${empty}
+   ...  contact_test_company@thinknet.co.th  ${empty}
+
+Register Company : Username is equal Password
+   ...  pass_company                         ${inner_username_equal_pass}
+   ...  pass_company                         ${empty}
+   ...  pass_company                         ${empty}
    ...  Thinknet Test Company                ${empty}
    ...  ${input_business}                    ${empty}
    ...  HR                                   ${empty}
@@ -90,7 +110,7 @@ Register Company : Password & Confirm Password less than 6 character
    ...  contact_test_company@thinknet.co.th  ${empty}
 
 Register Company : Password & Confirm Password more than 15 character
-   ...  ${input_username}                       ${empty}
+   ...  ${input_username}                    ${empty}
    ...  pass123456789876548879               ${inner_more_password}
    ...  pass123456789876548879               ${empty}
    ...  Thinknet Test Company                ${empty}
@@ -168,6 +188,9 @@ Register Company : Require recaptcha
    ...  HR                                   ${empty}
    ...  02-9000000                           ${empty}
    ...  contact_test_company@thinknet.co.th  ${empty}
+
+
+
 
 
 
