@@ -1,0 +1,12 @@
+*** Variables ***
+${l}                  th
+
+####### REGISTER COMPANY #######
+${input_username}     test_test_7
+${input_password}     Km10042535
+${input_email}        sirilacktest@gmail.com
+
+####### LOGIN COMPANY #######
+${input_username_login}   test_robot_15
+${input_password_login}   10042535
+

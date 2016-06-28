@@ -1,0 +1,54 @@
+*** Keywords ***
+Open Page
+   Open Browser                       http://test1-v2.jobthai.com/home/searchjob.php
+   Click Element                      id=${l}URL
+   Sleep   3s
+   Click Element                      id=bt_login_employer
+   Sleep   3s
+
+####### REGISTER COMPANY #######
+Open Welcome Email
+   Open Mailbox    host=imap.googlemail.com   user=sirilacktest@gmail.com    password=10042535
+   ${LATEST} =  Wait For Email
+      ...   sender=support@jobthail.com
+      ...   subject=Welcome to JobThai.com
+      ...   text=${input_username}
+      ...   text=${input_password}
+Reqire all field True
+   Click Element                id=register_business_type
+Reqire all field False
+    [Arguments]
+    ...  ${recieved_business_type}
+    Select From List By Label   id=register_business_type    ${recieved_business_type}
+Username is equal Password True
+    [Arguments]
+    ...  ${recieved_password}
+    ...  ${msg_password_err}
+    ...  ${recieved_username}
+    ...  ${msg_username_err}
+    Input Text                 id=register_password         ${recieved_password}
+    Click Element              id=login_username
+    Element Text Should Be     id=register_password_error   ${msg_password_err}
+
+    Input Text                 id=register_username         ${recieved_username}
+    Click Element              id=login_username
+    Element Text Should Be     id=register_username_error   ${msg_username_err}
+Username is equal Password False
+    [Arguments]
+    ...  ${recieved_username}
+    ...  ${msg_username_err}
+    ...  ${recieved_password}
+    ...  ${msg_password_err}
+    Input Text                 id=register_username         ${recieved_username}
+    Click Element              id=login_username
+    Element Text Should Be     id=register_username_error   ${msg_username_err}
+
+    Input Text                 id=register_password         ${recieved_password}
+    Click Element              id=login_username
+    Element Text Should Be     id=register_password_error   ${msg_password_err}
+
+####### LOGIN COMPANY #######
+Login Company Success True
+    Page Should Contain           Account ของคุณจะใช้งานได้หลังจากเราได้รับหลักฐานการโอนเงินแล้ว
+    Page Should Contain Element   id=jobsspace
+    Page Should Contain Element   id=package

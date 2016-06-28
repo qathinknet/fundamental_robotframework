@@ -1,0 +1,40 @@
+*** Variables ***
+## REGISTER COMPANY ##
+${helper_username}                           กรอกชื่อผู้ใช้ 6-15 หลัก เป็นตัวอักษรภาษาอังกฤษ ตัวเลข หรือเครื่องหมาย_เท่านั้น
+${helper_password}                           กรอกรหัสผ่าน 6-15 หลัก เป็นตัวอักษรภาษาอังกฤษ ตัวเลข หรือเครื่องหมาย_เท่านั้น
+${helper_email}                              กรอกอีเมล เช่น "jobthai@example.com" คุณสามารถกรอกได้มากกว่า 1 อีเมล โดยใช้เครื่องหมาย (,) คั่นระหว่างอีเมล
+${inner_username_require}                    กรุณากรอกชื่อผู้ใช้
+${inner_password_require}                    กรุณากรอกรหัสผ่าน
+${inner_comfirm_password_require}            กรุณากรอกยืนยันรหัสผ่าน
+${inner_company_name_require}                กรุณากรอกชื่อบริษัท
+${inner_business_type_require}               กรุณาเลือกลักษณะธุรกิจ
+${inner_contact_name_require}                กรุณากรอกชื่อผู้ติดต่อ
+${inner_tel_require}                         กรุณากรอกเบอร์โทรศัพท์
+${inner_email_require}                       กรุณากรอกอีเมล
+${inner_username_invalid}                   กรุณากรอกชื่อผู้ใช้ เป็นตัวอักษรภาษาอังกฤษ ตัวเลข หรือเครื่องหมาย_เท่านั้น
+${inner_less_username}                      กรุณากรอกชื่อผู้ใช้ อย่างน้อย 6 หลัก
+${inner_more_username}                      กรุณากรอกชื่อผู้ใช้ ไม่เกิน 15 หลัก
+${inner_exits_username}                     ชื่อผู้ใช้นี้มีผู้ใช้งานแล้ว กรุณาเลือกใช้ชื่อผู้ใช้อื่น
+${inner_username_equal_pass}                เพื่อความปลอดภัยของข้อมูล ไม่ควรใช้ชื่อผู้ใช้ตรงกับรหัสผ่าน
+${inner_pass_equal_username}                เพื่อความปลอดภัยของข้อมูล ไม่ควรใช้รหัสผ่านตรงกับชื่อผู้ใช้
+${inner_invalid_password}                   กรุณากรอกรหัสผ่าน เป็นตัวอักษรภาษาอังกฤษ ตัวเลข หรือเครื่องหมาย_เท่านั้น
+${inner_less_password}                      กรุณากรอกรหัสผ่าน อย่างน้อย 6 หลัก
+${inner_more_password}                      กรุณากรอกรหัสผ่าน ไม่เกิน 15 หลัก
+${inner_sequence_password}                  เพื่อความปลอดภัยของข้อมูล ไม่ควรใช้รหัสผ่านที่เป็นเลขเรียงกัน
+${inner_unique_password}                    เพื่อความปลอดภัยของข้อมูล ไม่ควรใช้รหัสผ่านที่เป็นเลขซ้ำกัน
+${inner_not_match_password}                 ข้อมูลรหัสผ่านไม่ตรงกัน
+${inner_less_tel}                           กรุณากรอกเบอร์โทรศัพท์อย่างน้อย 9 หลัก
+${inner_@example_email}                     ข้อมูลอีเมลไม่ถูกต้อง อีเมล "@example.com" เป็นอีเมลตัวอย่าง
+${inner_@jobthai_email}                     ข้อมูลอีเมลไม่ถูกต้อง อีเมล "@jobthai.com" เป็นอีเมลตัวอย่าง
+${inner_recaptcha}                          กรุณาทำเครื่องหมายถูกหน้าข้อความฉันไม่ใช่โปรแกรมอัตโนมัติ
+${input_business}                          ธุรกิจ ค้าปลีก
+${page_contain_register_1}                 การลงทะเบียนเรียบร้อยแล้ว
+${page_contain_register_2}                 กรุณากดปุ่มเข้าสู่ระบบด้านล่าง เพื่อทำการลงประกาศตำแหน่งงาน
+${page_contain_register_3}                 กรุณาเลือก Package
+
+## LOGIN COMPANY ##
+${inner_login_username_error}              กรุณากรอกชื่อผู้ใช้
+${inner_login_password_error}              กรุณากรอกรหัสผ่าน
+${inner_login_user_pass_error}             กรุณากรอกชื่อผู้ใช้และรหัสผ่าน
+${inner_login_user_pass_incorrect_error}   อีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณากรอกข้อมูลใหม่อีกครั้ง
+                                          # ถูกต้อง ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณากรอกข้อมูลใหม่อีกครั้ง

@@ -1,0 +1,37 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          ../resource/variable.txt
+Resource          ../resource/msg_${l}.txt
+Resource          ../resource/keyword.txt
+Resource          ../resource/template.txt
+Test Template     Test Step Login Company
+Suite Setup       Open Page
+Suite teardown    Reload Page
+
+*** Test Case ***
+Login Company : Require Username
+    ...   ${input_username_login}
+    ...   ${empty}
+    ...   ${inner_login_password_error}
+
+Login Company : Require Password
+   ...   ${empty}
+   ...   ${input_password_login}
+   ...   ${inner_login_username_error}
+
+Login Company : Require Username & Password
+   ...   ${empty}
+   ...   ${empty}
+   ...   ${inner_login_user_pass_error}
+
+Login Company : Username & Password incorrect
+   ...   email_invalid
+   ...   password_invalid
+   ...   ${inner_login_user_pass_incorrect_error}
+
+Login Company : Success
+   ...   ${input_username_login}
+   ...   ${input_password_login}
+   ...   ${empty}
+
+
